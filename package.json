@@ -1,0 +1,22 @@
+{
+  "name": "printer",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "web application to remotely controle printers",
+  "main": "app.js",
+  "scripts": {
+    "start": "node --experimental-modules --es-module-specifier-resolution=node src/app.js",
+    "test": "echo processing test"
+  },
+  "keywords": [
+    "printer",
+    "remote"
+  ],
+  "author": "aslkhon & muzammilkhon",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "pdf-to-printer": "^3.1.0",
+    "telegraf": "^4.4.2"
+  }
+}

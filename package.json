@@ -5,7 +5,7 @@
   "description": "web application to remotely controle printers",
   "main": "app.js",
   "scripts": {
-    "start": "node --experimental-modules --es-module-specifier-resolution=node src/app.js",
+    "start": "nodemon --experimental-modules --es-module-specifier-resolution=node src/app.js",
     "test": "echo processing test"
   },
   "keywords": [
@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^10.0.0",
+    "nodemon": "^2.0.12",
     "pdf-to-printer": "^3.1.0",
     "telegraf": "^4.4.2"
   }

@@ -1,25 +1,33 @@
 import dotenv from 'dotenv';
-import fs from 'fs';
+import fs, { unlink } from 'fs';
 import https from 'https';
 import ptp from 'pdf-to-printer';
-import { Telegraf, Telegram } from 'telegraf';
+import { Telegraf } from 'telegraf';
 
 dotenv.config();
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-bot.on('text', async (ctx) => ctx.reply('🖕'));
+bot.on('text', async (ctx) => ctx.reply('Hello'));
 
-bot.on('document', (ctx) => {
-  const file_id = ctx.message.document.file_id;
-  const file = fs.createWriteStream(`C:/Users/U2010145/Desktop/printer/assets/${file_id}.pdf`);
+bot.on('document', async (ctx) => {
+  try {
+    const file_id = ctx.message.document.file_id;
+    const file = fs.createWriteStream(`C:/Users/U2010145/Desktop/printer/assets/${file_id}.pdf`);
 
-  bot.telegram.getFileLink(file_id).then(url => {
+    const url = await bot.telegram.getFileLink(file_id);
+    
     https.get(url.href, function(responce) {
       responce.pipe(file);
-      ptp.print(`assets/${file_id}.pdf`).then(console.log).catch(console.error);
+      ptp.print(`assets/${file_id}.pdf`).catch((e) => console.log(e));
     });
-  });
+
+    unlink(`assets/${file_id}.pdf`)
+  } catch (error) {
+    ctx.reply(error);
+  }
+
+
 });
 
 export default bot;
